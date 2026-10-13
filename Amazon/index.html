@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shop electronics, fashion, home essentials and more at ShopZone.">
+  <title>ShopZone | Online Shopping</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="#" aria-label="ShopZone home">
+      Shop<span>Zone</span><small>.com</small>
+    </a>
+    <div class="delivery">
+      <span>Deliver to</span>
+      <strong>Everyone</strong>
+    </div>
+    <form class="search-bar" id="searchForm">
+      <select id="searchCategory" aria-label="Search category">
+        <option value="All">All</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Home">Home</option>
+        <option value="Books">Books</option>
+      </select>
+      <input id="searchInput" type="search" placeholder="Search ShopZone..." aria-label="Search products">
+      <button type="submit" aria-label="Search">🔍</button>
+    </form>
+    <button class="header-link" id="ordersButton">
+      <span>Returns</span>
+      <strong>& Orders</strong>
+    </button>
+    <button class="cart-button" id="cartButton">
+      🛒 Cart <span id="cartCount">0</span>
+    </button>
+  </header>
+
+  <nav class="nav-bar" aria-label="Product categories">
+    <button data-category="All" class="nav-category active">All</button>
+    <button data-category="Electronics" class="nav-category">Electronics</button>
+    <button data-category="Fashion" class="nav-category">Fashion</button>
+    <button data-category="Home" class="nav-category">Home & Living</button>
+    <button data-category="Books" class="nav-category">Books</button>
+    <button data-category="Deals" class="nav-category">Today's Deals</button>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">YOUR EVERYDAY MARKETPLACE</p>
+        <h1>Discover something<br>you'll love.</h1>
+        <p>Great finds, everyday essentials, and prices you'll love.</p>
+        <button id="shopNowButton" class="primary-button">Start shopping →</button>
+      </div>
+      <div class="hero-decoration" aria-hidden="true">🛍️</div>
+    </section>
+
+    <section class="benefits" aria-label="Shopping benefits">
+      <div>🚚 <strong>Convenient shopping</strong></div>
+      <div>💳 <strong>Clear pricing</strong></div>
+      <div>⭐ <strong>Quality picks</strong></div>
+    </section>
+
+    <section class="catalog" id="catalog">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">EXPLORE OUR COLLECTION</p>
+          <h2>Discover products</h2>
+          <p id="resultsCount" class="muted"></p>
+        </div>
+        <label class="sort-control">
+          Sort:
+          <select id="sortSelect">
+            <option value="featured">Featured</option>
+            <option value="low">Price: low to high</option>
+            <option value="high">Price: high to low</option>
+            <option value="rating">Highest rated</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="category-chips" id="categoryChips">
+        <button class="chip active" data-category="All">All products</button>
+        <button class="chip" data-category="Electronics">Electronics</button>
+        <button class="chip" data-category="Fashion">Fashion</button>
+        <button class="chip" data-category="Home">Home</button>
+        <button class="chip" data-category="Books">Books</button>
+      </div>
+
+      <div id="productGrid" class="product-grid"></div>
+
+      <div id="emptyState" class="empty-state" hidden>
+        <span>🔎</span>
+        <h3>No products found</h3>
+        <p>Try a different search or category.</p>
+        <button id="resetFilters" class="primary-button">Show all products</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="logo footer-logo" href="#">Shop<span>Zone</span><small>.com</small></a>
+    <p>A beginner-built shopping demo. Not affiliated with Amazon.</p>
+    <a href="#catalog">Back to products ↑</a>
+    <p class="copyright">© <span id="currentYear"></span> ShopZone</p>
+  </footer>
+
+  <!-- Shopping Cart Drawer -->
+  <div id="overlay" class="overlay" hidden></div>
+  <aside id="cartDrawer" class="cart-drawer" aria-label="Shopping cart" aria-hidden="true">
+    <div class="drawer-heading">
+      <h2>Your shopping cart</h2>
+      <button id="closeCartButton" class="icon-button" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-summary">
+      <p>Subtotal <strong id="cartSubtotal">GH₵0.00</strong></p>
+      <p class="muted small">Delivery costs are calculated at checkout.</p>
+      <button id="checkoutButton" class="primary-button full-width">Proceed to checkout</button>
+      <button id="continueShopping" class="text-button">Continue shopping</button>
+    </div>
+  </aside>
+
+  <!-- Checkout Dialog Modal -->
+  <section id="checkoutModal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+    <div class="modal-card">
+      <div class="drawer-heading">
+        <h2 id="checkoutTitle">Checkout</h2>
+        <button id="closeCheckoutButton" class="icon-button" aria-label="Close checkout">✕</button>
+      </div>
+      <div>
+        <p class="muted">Enter your details to create a demo order.</p>
+        <form id="checkoutForm">
+          <label>Full name
+            <input name="fullName" required maxlength="100" autocomplete="name" placeholder="Your full name">
+          </label>
+          <label>Email address
+            <input name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+          </label>
+          <label>Delivery address
+            <textarea name="address" required maxlength="300" autocomplete="street-address" placeholder="Enter your delivery address"></textarea>
+          </label>
+          <label>City or town
+            <input name="city" required autocomplete="address-level2" placeholder="Your city or town">
+          </label>
+          <div class="order-preview">
+            <span>Order total</span>
+            <strong id="checkoutTotal">GH₵0.00</strong>
+          </div>
+          <p class="muted small">Demo only: this form does not process real payments.</p>
+          <button type="submit" class="primary-button full-width">Place demo order</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Orders Modal Section -->
+  <section id="ordersSection" class="orders-section" hidden>
+    <div class="orders-card">
+      <div class="drawer-heading">
+        <h2>Your demo orders</h2>
+        <button id="closeOrdersButton" class="icon-button" aria-label="Close orders">✕</button>
+      </div>
+      <div id="ordersList"></div>
+    </div>
+  </section>
+</body>
+</html>
